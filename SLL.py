@@ -9,6 +9,9 @@ class _Node:
     def next(self):
         return self.__next
 
+    def set_next(self, nextNode):
+        self.__next = nextNode
+
 class SingleLinkedList:
     def __init__(self, first = None):
         self.__head = first
@@ -25,6 +28,8 @@ class SingleLinkedList:
     def tail(self):
         if self.isEmpty():
             return SingleLinkedList()
+        elif self.__head.next() is None:
+            return SingleLinkedList()
         else:
             return SingleLinkedList(self.__head.next())
 
@@ -34,10 +39,10 @@ class SingleLinkedList:
 
     def removeLast(self):
         if self.isEmpty() or self.__head.next() is None:
-            return SingleLinkedList()
+            self.__head = None
         else:
             cursor = self.__head
             while not cursor.next().next() is None:
                 cursor = cursor.next()
             cursor.set_next(None)
-            return self
+        return self
