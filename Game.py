@@ -1,6 +1,7 @@
 import numpy as np
 import time
 from User import User
+import os
 
 class Game:
     def __init__(self, player1, player2):
@@ -11,8 +12,9 @@ class Game:
         pass
 
     def start(self):
+        gamefield = GameField(15,50)
         while(True):
-            print("Game is started")
+            gamefield.printField()
             time.sleep(3)
 
     def gameOver(self):
@@ -21,16 +23,48 @@ class Game:
         else:
             return False
         
-
 class GameField:
     def __init__(self, height, width):
         self.__height = height
         self.__width = width
+        self.__ball = Ball(round(self.__width/2),round(self.__height/2))
+        self.__field = self.makeField()
+
+    def height(self):
+        return self.__height
+
+    def width(self):
+        return self.__width
 
     def makeField(self):
-        field = np.empty([self.__height,self.__width])
-        #field = np.arange(self.__height*self.__width).reshape(self.__height, self.__width)
+        field = np.empty([self.__height,self.__width],dtype = str)
+        for row in range(0,self.__height):
+            for col in range(0,self.__width):
+                if row==0 or row==self.__height-1:
+                    field[row][col]='-'
+                elif col==0 or col==self.__width-1:
+                    field[row][col]='|'
+                else:
+                    field[row][col]=' '
+        field[self.__ball.getY()][self.__ball.getX()]='B'
         return field
+
+    def updateField(self):
+        #set x & set y ball
+        self.__field[self.__ball.getY()][self.__ball.getX()]='B'
+
+    def printField(self):
+        self.updateField()
+        self.clearTerminal()
+        for row in range(0,self.__height):
+            print()
+            for col in range(0,self.__width):
+                print(self.__field[row][col],end='')
+        print()
+
+    def clearTerminal(self):
+        clear = lambda: os.system('cls')
+        clear()
 
 class Ball:
     def __init__(self, positionX, positionY):
