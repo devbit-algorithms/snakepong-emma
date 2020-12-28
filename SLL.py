@@ -46,3 +46,13 @@ class SingleLinkedList:
                 cursor = cursor.next()
             cursor.set_next(None)
         return self
+    
+    def append(self, element):
+        if self.isEmpty():
+            self.__head = _Node(element, None)
+        else:
+            cursor = self.__head
+            while not cursor.next() is None:
+                cursor = cursor.next()
+            cursor.set_next(_Node(element, None))
+        return self
