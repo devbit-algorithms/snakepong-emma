@@ -34,7 +34,10 @@ class SingleLinkedList:
             return SingleLinkedList(self.__head.next())
 
     def prepend(self, element):
-        self.__head = _Node(element, self.__head)
+        if self.isEmpty():
+            self.__head = _Node(element, None)
+        else:
+            self.__head = _Node(element, self.__head)
         return self
 
     def removeLast(self):
