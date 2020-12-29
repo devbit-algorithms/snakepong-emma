@@ -9,15 +9,15 @@ class Game:
         self.__gamefield = GameField(15,50)
 
     def keyPressed(self, key):
-        if(key=='key.left'):
-            self.__gamefield.moveSnake('LEFT')
-        elif(key=='key.right'):
-            self.__gamefield.moveSnake('RIGHT')
-        elif(key=='key.up'):
-            self.__gamefield.moveSnake('UP')
-        elif(key=='key.down'):
-            self.__gamefield.moveSnake('DOWN')
-        elif(key=='key.esc'):
+        if(key=='Key.left'):
+            self.__gamefield.changeSnakeDirection('LEFT')
+        elif(key=='Key.right'):
+            self.__gamefield.changeSnakeDirection('RIGHT')
+        elif(key=='Key.up'):
+            self.__gamefield.changeSnakeDirection('UP')
+        elif(key=='Key.down'):
+            self.__gamefield.changeSnakeDirection('DOWN')
+        elif(key=='Key.esc'):
             pass # CHANGE THIS!
 
     def start(self):

@@ -1,5 +1,6 @@
 from Snake import Snake
 from Ball import Ball
+from Coordinates import Coordinates
 import numpy as np
 import os
 
@@ -7,8 +8,11 @@ class GameField:
     def __init__(self, height, width):
         self.__height = height
         self.__width = width
-        self.__ball = Ball(round(self.__width/2),round(self.__height/2))
-        self.__snake = Snake(4,4,4) # CHANGE THIS!
+        self.__ball = Ball(Coordinates(round(self.__width/2),round(self.__height/2)))
+        self.__xDirectionBall = 'LEFT'
+        self.__yDirectionBall = 'HORIZONTAL'
+        self.__snake = Snake(4,round(self.__width*2/3),round(self.__height/2)) # CHANGE THIS!
+        self.__snakeDirection = 'LEFT'
         self.__field = self.makeField()
 
     def height(self):
@@ -27,16 +31,30 @@ class GameField:
                     field[row][col]='|'
                 else:
                     field[row][col]=' '
-        field[self.__ball.getY()][self.__ball.getX()]='B'
-        
+        field[self.__ball.coordinates().y()][self.__ball.coordinates().x()]='B'
+        snake = self.__snake.getSnake()
+        for i in range(0,len(snake)):
+            field[snake[i].y()][snake[i].x()] = 'S'
         return field
 
-    def moveSnake(self, direction):
-        pass
+    def changeSnakeDirection(self, direction):
+        # check if snake hits any wall
+        # check if snake hits itself
+        self.__snakeDirection = direction
+
+    def moveBall(self):
+        # check if ball hits wall (top or bottom)
+        # check if ball hits wall (left or right) --> add point to player1/player2
+        # check if ball hits pong
+        # check if ball hits snake
+        self.__ball.move(self.__xDirectionBall, self.__yDirectionBall)
 
     def updateField(self):
-        #set x & set y ball
-        self.__field[self.__ball.getY()][self.__ball.getX()]='B'
+        self.moveBall() # set x & set y ball
+        self.__snake.move(self.__snakeDirection) # move snake
+        
+        self.__field = self.makeField()
+
 
     def printField(self):
         self.updateField()
