@@ -31,4 +31,3 @@ game.start()
 # key listener: https://stackoverflow.com/questions/11918999/key-listeners-in-python 
 # pynput: https://pypi.org/project/pynput/
 # pynput docs: https://pynput.readthedocs.io/en/latest/
-# print without new line: https://careerkarma.com/blog/python-print-without-new-line/#:~:text=In%20order%20to%20print%20without,is%20a%20great%20day.%22)&text=print(%22It%20is%20a%20great%20day.%22),-The%20output%20for

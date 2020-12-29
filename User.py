@@ -7,4 +7,4 @@ class User:
         self.__score += 1
 
     def score(self):
-        return self.__score()
+        return self.__score

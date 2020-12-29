@@ -25,6 +25,12 @@ class SingleLinkedList:
         else:
             return self.__head.get()
 
+    def headNode(self):
+        if self.isEmpty():
+            return None
+        else:
+            return self.__head
+
     def tail(self):
         if self.isEmpty():
             return SingleLinkedList()
@@ -59,3 +65,7 @@ class SingleLinkedList:
                 cursor = cursor.next()
             cursor.set_next(_Node(element, None))
         return self
+
+
+    def contains(self, element):
+        pass
