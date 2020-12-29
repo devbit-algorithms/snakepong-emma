@@ -6,7 +6,6 @@ class Snake(SingleLinkedList):
     def __init__(self, length, startX, startY):
         super().__init__()
         self.__length = length
-        #self.createSnake(startX,startY)
         self.createSnake(Coordinates(startX,startY))
 
     def getLength(self):
