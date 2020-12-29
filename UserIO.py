@@ -12,8 +12,7 @@ cpu = User("CPU")
 game = Game(player, cpu)
 
 def on_release(key):
-    print('{0} released'.format(
-        key))
+    #print('{0} released'.format(key))
     game.keyPressed('{0}'.format(key))
     
     if key == keyboard.Key.esc:

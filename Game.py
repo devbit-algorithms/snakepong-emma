@@ -18,7 +18,7 @@ class Game:
         elif(key=='Key.down'):
             self.__gamefield.changeSnakeDirection('DOWN')
         elif(key=='Key.esc'):
-            pass # CHANGE THIS!
+            pass # ... CHANGE THIS!
 
     def start(self):
         while(not self.gameOver()):

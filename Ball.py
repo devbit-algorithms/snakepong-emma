@@ -7,6 +7,12 @@ class Ball:
     def coordinates(self):
         return self.__coordinates
 
+    def x(self):
+        return self.__coordinates.x()
+
+    def y(self):
+        return self.__coordinates.y()
+
     def move(self, xDirection, yDirection):
         if(xDirection == 'LEFT'):
             self.__coordinates.setX(self.__coordinates.x()-1)
