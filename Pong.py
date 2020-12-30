@@ -3,9 +3,11 @@ from Coordinates import Coordinates
 import numpy as np
 
 class Pong(SingleLinkedList):
-    def __init__(self, length, startCoordinates):
+    def __init__(self, length, startCoordinates, limitTop, limitBottom):
         super().__init__()
         self.__length = length
+        self.__topLimit = limitTop
+        self.__bottomLimit = limitBottom
         self.createPong(startCoordinates)
 
     def createPong(self, startCoordinates):
@@ -23,8 +25,14 @@ class Pong(SingleLinkedList):
         
     def move(self, ballCoordinates):
         if(ballCoordinates.y()>self.head().y()+round((self.__length-1)/2)):
-            self.prepend(Coordinates(self.head().x(),self.head().y()+1))
+            self.__move('DOWN')
         elif(ballCoordinates.y()<self.head().y()+round((self.__length-1)/2)):
-            self.prepend(Coordinates(self.head().x(),self.head().y()-1))
+            self.__move('UP')
         self.removeLast()
         return self
+
+    def __move(self, direction):
+        if(direction == 'UP' and self.head().y()>self.__topLimit):
+            self.prepend(Coordinates(self.head().x(),self.head().y()-1))
+        elif(direction == 'DOWN' and self.head().y()<self.__bottomLimit):
+            self.prepend(Coordinates(self.head().x(),self.head().y()+1))
