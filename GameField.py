@@ -4,6 +4,7 @@ from Pong import Pong
 from Coordinates import Coordinates
 import numpy as np
 import os
+import time
 
 class GameField:
     def __init__(self, height, width):
@@ -14,11 +15,11 @@ class GameField:
 
     def initializeGameField(self):
         self.__ball = Ball(Coordinates(round(self.__width/2),round(self.__height/2)))
-        self.__xDirectionBall = 'LEFT'
-        self.__yDirectionBall = 'HORIZONTAL'
+        self.__xDirectionBall = 'RIGHT'
+        self.__yDirectionBall = 'UP'
         self.__snake = Snake(4,round(self.__width*2/3),round(self.__height/2))
         self.__snakeDirection = 'LEFT'
-        self.__pong = Pong(4,Coordinates(2,round(self.__height/2)-1),1,self.__height-1)
+        self.__pong = Pong(4,Coordinates(2,round(self.__height/2)-1),1,self.__height-2)
 
     def height(self):
         return self.__height
@@ -46,9 +47,25 @@ class GameField:
         return field
 
     def changeSnakeDirection(self, direction):
-        # ... check if snake hits any wall
-        # ... check if snake hits itself
-        self.__snakeDirection = direction
+        if(not self.__snake.contains(self.__snake.newCoordinates(direction))):
+            self.__snakeDirection = direction
+        # else: snake just keeps the same direction
+
+    def moveSnake(self):
+        # check if snake hits any wall
+        newCoordinates = self.__snake.newCoordinates(self.__snakeDirection)
+        if(newCoordinates.x() == 0 or newCoordinates.y() == 0 or newCoordinates.x() == self.__width-1 or newCoordinates.y() == self.__height-1):
+            # ... Add point to CPU
+            time.sleep(1)
+            self.resetField()
+        # check if snake hits itself
+        if(self.__snake.contains(newCoordinates)):
+            # ... Add point to CPU
+            time.sleep(1)
+            self.resetField()
+        else:
+            self.__snake.move(self.__snakeDirection) 
+
 
     def moveBall(self):
         # check if ball hits wall (left or right) --> add point to player1/player2
@@ -62,20 +79,25 @@ class GameField:
         # check if ball hits wall (top or bottom)
         if(self.__ball.y()==1 and self.__yDirectionBall == 'UP'):
             self.__yDirectionBall = 'DOWN'
-        elif(self.__ball.y()==self.__height-1 and self.__yDirectionBall == 'DOWN'):
+        elif(self.__ball.y()==self.__height-2 and self.__yDirectionBall == 'DOWN'):
             self.__yDirectionBall = 'UP'
         
         # ... check if ball hits pong
 
         # ... check if ball hits snake
+        if(self.__snake.contains(Coordinates(self.__ball.x()-1,self.__ball.y())) and self.__xDirectionBall == 'LEFT'):
+            self.__xDirectionBall = 'RIGHT'
+
+        elif(self.__snake.contains(Coordinates(self.__ball.x()+1,self.__ball.y())) and self.__xDirectionBall == 'RIGHT'):
+            self.__xDirectionBall = 'LEFT'
 
         # move ball
         self.__ball.move(self.__xDirectionBall, self.__yDirectionBall)
 
     def updateField(self):
         self.moveBall() # set x & set y ball
-        self.__snake.move(self.__snakeDirection) # move snake
-        #self.__pong.move(self.__ball.coordinates()) #... move pong
+        self.moveSnake() # move snake
+        self.__pong.move(self.__ball.coordinates()) # move pong
         
         self.__field = self.makeField()
 

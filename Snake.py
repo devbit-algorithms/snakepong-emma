@@ -42,25 +42,43 @@ class Snake(SingleLinkedList):
     #    self.removeLast()
     #    return self
 
-    def move(self, direction):
+    def newCoordinates(self, direction):
         lastHeadCoordinates = self.head()
+        newCoordinates = lastHeadCoordinates
         if(direction=='UP'):
             newCoordinates = Coordinates(lastHeadCoordinates.x(),lastHeadCoordinates.y()-1)
-            if(not self.contains(newCoordinates)):
-                self.prepend(newCoordinates)
         elif(direction=='DOWN'):
             newCoordinates = Coordinates(lastHeadCoordinates.x(),lastHeadCoordinates.y()+1)
-            if(not self.contains(newCoordinates)):
-                self.prepend(newCoordinates)
         elif(direction=='LEFT'):
             newCoordinates = Coordinates(lastHeadCoordinates.x()-1,lastHeadCoordinates.y())
-            if(not self.contains(newCoordinates)):
-                self.prepend(newCoordinates)
         elif(direction=='RIGHT'):
             newCoordinates = Coordinates(lastHeadCoordinates.x()+1,lastHeadCoordinates.y())
-            if(not self.contains(newCoordinates)):
-                self.prepend(newCoordinates)
+        return newCoordinates
+
+    def move(self, direction):
+        self.prepend(self.newCoordinates(direction))
         self.removeLast()
+        # lastHeadCoordinates = self.head()
+        # if(direction=='UP'):
+        #     newCoordinates = Coordinates(lastHeadCoordinates.x(),lastHeadCoordinates.y()-1)
+        #     if(not self.contains(newCoordinates)):
+        #         self.prepend(newCoordinates)
+        #         self.removeLast()
+        # elif(direction=='DOWN'):
+        #     newCoordinates = Coordinates(lastHeadCoordinates.x(),lastHeadCoordinates.y()+1)
+        #     if(not self.contains(newCoordinates)):
+        #         self.prepend(newCoordinates)
+        #         self.removeLast()
+        # elif(direction=='LEFT'):
+        #     newCoordinates = Coordinates(lastHeadCoordinates.x()-1,lastHeadCoordinates.y())
+        #     if(not self.contains(newCoordinates)):
+        #         self.prepend(newCoordinates)
+        #         self.removeLast()
+        # elif(direction=='RIGHT'):
+        #     newCoordinates = Coordinates(lastHeadCoordinates.x()+1,lastHeadCoordinates.y())
+        #     if(not self.contains(newCoordinates)):
+        #         self.prepend(newCoordinates)
+        #         self.removeLast()
         return self
 
     #def contains(self, element): # contains method for arrays like [x,y]

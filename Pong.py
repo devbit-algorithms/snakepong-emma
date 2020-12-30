@@ -25,14 +25,15 @@ class Pong(SingleLinkedList):
         
     def move(self, ballCoordinates):
         if(ballCoordinates.y()>self.head().y()+round((self.__length-1)/2)):
-            self.__move('DOWN')
+            self.__move('DOWN')           
         elif(ballCoordinates.y()<self.head().y()+round((self.__length-1)/2)):
-            self.__move('UP')
-        self.removeLast()
+            self.__move('UP')         
         return self
 
     def __move(self, direction):
         if(direction == 'UP' and self.head().y()>self.__topLimit):
             self.prepend(Coordinates(self.head().x(),self.head().y()-1))
+            self.removeLast()
         elif(direction == 'DOWN' and self.head().y()+self.__length-1<self.__bottomLimit):
             self.prepend(Coordinates(self.head().x(),self.head().y()+1))
+            self.removeLast()
