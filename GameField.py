@@ -9,13 +9,16 @@ class GameField:
     def __init__(self, height, width):
         self.__height = height
         self.__width = width
+        self.initializeGameField()
+        self.__field = self.makeField()
+
+    def initializeGameField(self):
         self.__ball = Ball(Coordinates(round(self.__width/2),round(self.__height/2)))
         self.__xDirectionBall = 'LEFT'
         self.__yDirectionBall = 'HORIZONTAL'
         self.__snake = Snake(4,round(self.__width*2/3),round(self.__height/2))
         self.__snakeDirection = 'LEFT'
-        self.__pong = Pong(4,Coordinates(2,round(self.__height/2)),1,self.__height-1)
-        self.__field = self.makeField()
+        self.__pong = Pong(4,Coordinates(2,round(self.__height/2)-1),1,self.__height-1)
 
     def height(self):
         return self.__height
@@ -72,7 +75,7 @@ class GameField:
     def updateField(self):
         self.moveBall() # set x & set y ball
         self.__snake.move(self.__snakeDirection) # move snake
-        #self.__pong.move(self.__ball.coordinates()) # move pong
+        #self.__pong.move(self.__ball.coordinates()) #... move pong
         
         self.__field = self.makeField()
 
@@ -91,8 +94,8 @@ class GameField:
         clear()
 
     def resetField(self):
-        # ... Set ball, pong & snake back to starting position
-        pass
+        # Set ball, pong & snake back to starting position
+        self.initializeGameField()
 
 
 # Sources:

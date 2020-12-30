@@ -34,5 +34,5 @@ class Pong(SingleLinkedList):
     def __move(self, direction):
         if(direction == 'UP' and self.head().y()>self.__topLimit):
             self.prepend(Coordinates(self.head().x(),self.head().y()-1))
-        elif(direction == 'DOWN' and self.head().y()<self.__bottomLimit):
+        elif(direction == 'DOWN' and self.head().y()+self.__length-1<self.__bottomLimit):
             self.prepend(Coordinates(self.head().x(),self.head().y()+1))
