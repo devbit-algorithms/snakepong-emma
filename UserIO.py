@@ -4,12 +4,14 @@ from Game import Game
 
 print("Welcome to the snakepong application.\n")
 
-#username = input("Please enter your name: ")
-#player = User(username)
-player = User('username')
+username = input("Please enter your name: ")
+player = User(username)
 cpu = User("CPU")
 
 game = Game(player, cpu)
+
+print("\nUse the arrow keys to control the snake.\nTry to get the ball to the left side of the board.\nDefend your side (the right side of the board).\nGood Luck!")
+userinput = input("\nPress enter to start")
 
 def on_release(key):
     #print('{0} released'.format(key))

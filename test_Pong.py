@@ -39,3 +39,10 @@ def test_getPong():
     assert array[1].x() == 2 and array[1].y() == 3
     assert array[2].x() == 2 and array[2].y() == 4
     assert array[3].x() == 2 and array[3].y() == 5
+
+def test_contains():
+    list = Pong(4,Coordinates(2,2),1,20)
+    assert list.contains(Coordinates(2,2))
+    assert list.contains(Coordinates(2,3))
+    assert list.contains(Coordinates(2,4))
+    assert list.contains(Coordinates(2,5))
