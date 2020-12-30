@@ -6,7 +6,7 @@ class Game:
     def __init__(self, player1, player2):
         self.__player1 = player1
         self.__player2 = player2
-        self.__gamefield = GameField(15,50)
+        self.__gamefield = GameField(15,50, self.__player1, self.__player2)
 
     def keyPressed(self, key):
         if(key=='Key.left'):
@@ -18,7 +18,7 @@ class Game:
         elif(key=='Key.down'):
             self.__gamefield.changeSnakeDirection('DOWN')
         elif(key=='Key.esc'):
-            pass # ... CHANGE THIS!
+            self.__player2.addPoint(5)
 
     def start(self):
         while(not self.gameOver()):

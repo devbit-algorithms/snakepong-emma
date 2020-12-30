@@ -9,6 +9,8 @@ Name: Emma Dossche
 ## How does the game works?
 Start the application by running the UserIO.py file.
 
+Click on the ESC button to give up.
+
 ## Classes: methods & attributes
 
 ## Sources

@@ -37,3 +37,13 @@ class Pong(SingleLinkedList):
         elif(direction == 'DOWN' and self.head().y()+self.__length-1<self.__bottomLimit):
             self.prepend(Coordinates(self.head().x(),self.head().y()+1))
             self.removeLast()
+
+    def contains(self, element):
+        elementInList = False
+        cursor = self.headNode()
+        while not cursor is None:
+            if cursor.get().x() == element.x() and cursor.get().y() == element.y():
+                elementInList = True
+                break
+            cursor = cursor.next()
+        return elementInList

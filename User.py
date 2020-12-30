@@ -3,8 +3,11 @@ class User:
         self.__name = name
         self.__score = score
 
-    def addPoint(self):
-        self.__score += 1
+    def addPoint(self, points=1):
+        self.__score += points
 
     def score(self):
         return self.__score
+
+    def username(self):
+        return self.__name

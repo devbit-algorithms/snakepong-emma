@@ -2,20 +2,23 @@ from Snake import Snake
 from Ball import Ball
 from Pong import Pong
 from Coordinates import Coordinates
+from User import User
 import numpy as np
 import os
 import time
 
 class GameField:
-    def __init__(self, height, width):
+    def __init__(self, height, width, player1, player2):
         self.__height = height
         self.__width = width
+        self.__player1 = player1 # USER
+        self.__player2 = player2 # CPU
         self.initializeGameField()
         self.__field = self.makeField()
 
     def initializeGameField(self):
         self.__ball = Ball(Coordinates(round(self.__width/2),round(self.__height/2)))
-        self.__xDirectionBall = 'RIGHT'
+        self.__xDirectionBall = 'LEFT'
         self.__yDirectionBall = 'UP'
         self.__snake = Snake(4,round(self.__width*2/3),round(self.__height/2))
         self.__snakeDirection = 'LEFT'
@@ -55,12 +58,12 @@ class GameField:
         # check if snake hits any wall
         newCoordinates = self.__snake.newCoordinates(self.__snakeDirection)
         if(newCoordinates.x() == 0 or newCoordinates.y() == 0 or newCoordinates.x() == self.__width-1 or newCoordinates.y() == self.__height-1):
-            # ... Add point to CPU
+            self.__player2.addPoint()
             time.sleep(1)
             self.resetField()
         # check if snake hits itself
         if(self.__snake.contains(newCoordinates)):
-            # ... Add point to CPU
+            self.__player2.addPoint()
             time.sleep(1)
             self.resetField()
         else:
@@ -70,11 +73,11 @@ class GameField:
     def moveBall(self):
         # check if ball hits wall (left or right) --> add point to player1/player2
         if(self.__ball.x()==1 and self.__xDirectionBall == 'LEFT'):
+            self.__player1.addPoint()
             self.resetField()
-            # ... ADD point to player1
-        elif(self.__ball.x()==self.__width-1 and self.__xDirectionBall == 'RIGHT'):
+        elif(self.__ball.x()==self.__width-2 and self.__xDirectionBall == 'RIGHT'):
+            self.__player2.addPoint()
             self.resetField()
-            # ... ADD point to player2
 
         # check if ball hits wall (top or bottom)
         if(self.__ball.y()==1 and self.__yDirectionBall == 'UP'):
@@ -82,14 +85,22 @@ class GameField:
         elif(self.__ball.y()==self.__height-2 and self.__yDirectionBall == 'DOWN'):
             self.__yDirectionBall = 'UP'
         
-        # ... check if ball hits pong
+        # check if ball hits pong
+        if(self.__pong.contains(Coordinates(self.__ball.x()-1,self.__ball.y())) and self.__xDirectionBall == 'LEFT'):
+            self.__xDirectionBall = 'RIGHT'
 
-        # ... check if ball hits snake
+        # check if ball hits snake
         if(self.__snake.contains(Coordinates(self.__ball.x()-1,self.__ball.y())) and self.__xDirectionBall == 'LEFT'):
             self.__xDirectionBall = 'RIGHT'
 
         elif(self.__snake.contains(Coordinates(self.__ball.x()+1,self.__ball.y())) and self.__xDirectionBall == 'RIGHT'):
             self.__xDirectionBall = 'LEFT'
+
+        if(self.__snake.contains(Coordinates(self.__ball.x(),self.__ball.y()-1)) and self.__yDirectionBall == 'UP'):
+            self.__yDirectionBall = 'DOWN'
+
+        elif(self.__snake.contains(Coordinates(self.__ball.x(),self.__ball.y()+1)) and self.__yDirectionBall == 'DOWN'):
+            self.__yDirectionBall = 'UP'
 
         # move ball
         self.__ball.move(self.__xDirectionBall, self.__yDirectionBall)
@@ -105,6 +116,7 @@ class GameField:
     def printField(self):
         self.updateField()
         self.clearTerminal()
+        self.printPlayerScores()
         for row in range(0,self.__height):
             print()
             for col in range(0,self.__width):
@@ -118,6 +130,10 @@ class GameField:
     def resetField(self):
         # Set ball, pong & snake back to starting position
         self.initializeGameField()
+
+    def printPlayerScores(self):
+        print("# Player 1: " + self.__player1.username() + " ## Score: " + str(self.__player1.score()))
+        print("# Player 2: " + self.__player2.username() + " ## Score: " + str(self.__player2.score()))
 
 
 # Sources:
