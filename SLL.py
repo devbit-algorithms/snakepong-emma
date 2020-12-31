@@ -55,6 +55,13 @@ class SingleLinkedList:
                 cursor = cursor.next()
             cursor.set_next(None)
         return self
+
+    def removeFirst(self):
+        if self.isEmpty() or self.__head.next() is None:
+            self.__head = None
+        else:
+            self.__head = self.__head.next()
+        return self
     
     def append(self, element):
         if self.isEmpty():

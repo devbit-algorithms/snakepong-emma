@@ -24,12 +24,6 @@ class GameField:
         self.__snakeDirection = 'LEFT'
         self.__pong = Pong(4,Coordinates(2,round(self.__height/2)-1),1,self.__height-2)
 
-    def height(self):
-        return self.__height
-
-    def width(self):
-        return self.__width
-
     def makeField(self):
         field = np.empty([self.__height,self.__width],dtype = str)
         for row in range(0,self.__height):
@@ -112,6 +106,9 @@ class GameField:
         
         self.__field = self.makeField()
 
+    def clearTerminal(self):
+        clear = lambda: os.system('cls')
+        clear()
 
     def printField(self):
         self.updateField()
@@ -121,11 +118,7 @@ class GameField:
             print()
             for col in range(0,self.__width):
                 print(self.__field[row][col],end='')
-        print()
-
-    def clearTerminal(self):
-        clear = lambda: os.system('cls')
-        clear()
+        print()   
 
     def resetField(self):
         # Set ball, pong & snake back to starting position
@@ -135,6 +128,11 @@ class GameField:
         print("# Player 1: " + self.__player1.username() + " ## Score: " + str(self.__player1.score()))
         print("# Player 2: " + self.__player2.username() + " ## Score: " + str(self.__player2.score()))
 
+    def height(self):
+        return self.__height
+
+    def width(self):
+        return self.__width
 
 # Sources:
 # Add type to numpy empty array: https://stackoverflow.com/questions/13717554/weird-behaviour-initializing-a-numpy-array-of-string-data

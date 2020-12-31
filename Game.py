@@ -23,7 +23,7 @@ class Game:
     def start(self):
         while(not self.gameOver()):
             self.__gamefield.printField()
-            time.sleep(3)
+            time.sleep(1)
 
     def gameOver(self):
         if(self.__player1.score()>=5 or self.__player2.score()>=5):
@@ -35,12 +35,6 @@ class Game:
             return True  
         else:
             return False
-
-
-#class PrintField:
-    #while (True):
-        #print(GameField(4,3).makeField())
-        #time.sleep(1)
 
 
 # Sources:

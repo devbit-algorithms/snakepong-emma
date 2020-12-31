@@ -35,8 +35,8 @@ class Pong(SingleLinkedList):
             self.prepend(Coordinates(self.head().x(),self.head().y()-1))
             self.removeLast()
         elif(direction == 'DOWN' and self.head().y()+self.__length-1<self.__bottomLimit):
-            self.prepend(Coordinates(self.head().x(),self.head().y()+1))
-            self.removeLast()
+            self.append(Coordinates(self.head().x(),self.head().y()+self.__length))
+            self.removeFirst()
 
     def contains(self, element):
         elementInList = False
